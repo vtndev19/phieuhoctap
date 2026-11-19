@@ -1,0 +1,6 @@
+{
+  "name": "Phiếu Học Tập Tương Tác - Tin Học 7 Bài 1",
+  "description": "Ứng dụng phiếu học tập tương tác môn Tin học 7 - Bài 1: Thiết bị vào - ra, gồm 4 phiếu bài tập chuẩn SGK, đồng hồ đếm ngược, modal nhóm và bảng tổng hợp dành cho giáo viên.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
