@@ -9,6 +9,10 @@ import {
   Sparkles,
   FileSpreadsheet,
   Users,
+  BookOpen,
+  Image as ImageIcon,
+  ExternalLink,
+  HelpCircle,
 } from 'lucide-react';
 import {
   WORKSHEETS_META,
@@ -20,6 +24,7 @@ import {
   Worksheet4Answers,
   STANDARD_ANSWERS,
 } from '../data/worksheetsData';
+import { GroupAnswerDetailModal } from './GroupAnswerDetailModal';
 
 interface TeacherDashboardProps {
   submissions: WorksheetSubmission[];
@@ -43,6 +48,14 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
   const [draftScore, setDraftScore] = useState<number>(100);
   const [draftComment, setDraftComment] = useState<string>('');
   const [savingId, setSavingId] = useState<string | null>(null);
+
+  const [detailModalSubmission, setDetailModalSubmission] = useState<WorksheetSubmission | null>(null);
+  const [detailModalInitialQ, setDetailModalInitialQ] = useState<number>(0);
+
+  const handleOpenDetailModal = (sub: WorksheetSubmission, qIndex: number = 0) => {
+    setDetailModalSubmission(sub);
+    setDetailModalInitialQ(qIndex);
+  };
 
   const filteredSubmissions = useMemo(() => {
     return submissions.filter((s) => {
@@ -108,17 +121,70 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
       const a = sub.answers as Worksheet1Answers;
       return (
         <div className="space-y-2.5 text-xs sm:text-sm text-slate-800">
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-            <p className="font-bold text-[#1D436B]">Câu 1 (Dạng thông tin):</p>
-            <p className="mt-0.5">{a.q1Text || 'Chưa điền nội dung'}</p>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleOpenDetailModal(sub, 0)}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 0)}
+            className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+            title="Bấm để xem đề bài và hình ảnh minh họa (Micro & Loa)"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                Câu 1 (Dạng thông tin):
+              </p>
+              <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+                <ImageIcon className="w-3 h-3" />
+                <span>Xem đề bài & ảnh</span>
+              </span>
+            </div>
+            <p className="mt-1 text-slate-700 line-clamp-2">
+              {a.q1Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+            </p>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-            <p className="font-bold text-[#1D436B]">Câu 2 (Thiết bị vào):</p>
-            <p className="mt-0.5">{a.q2Text || 'Chưa điền nội dung'}</p>
+
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleOpenDetailModal(sub, 1)}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 1)}
+            className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+            title="Bấm để xem đề bài và hình ảnh minh họa (Micro)"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                Câu 2 (Thiết bị vào):
+              </p>
+              <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+                <ImageIcon className="w-3 h-3" />
+                <span>Xem đề bài & ảnh</span>
+              </span>
+            </div>
+            <p className="mt-1 text-slate-700 line-clamp-2">
+              {a.q2Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+            </p>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-            <p className="font-bold text-[#1D436B]">Câu 3 (Thiết bị ra):</p>
-            <p className="mt-0.5">{a.q3Text || 'Chưa điền nội dung'}</p>
+
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleOpenDetailModal(sub, 2)}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 2)}
+            className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+            title="Bấm để xem đề bài và hình ảnh minh họa (Loa)"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                Câu 3 (Thiết bị ra):
+              </p>
+              <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+                <ImageIcon className="w-3 h-3" />
+                <span>Xem đề bài & ảnh</span>
+              </span>
+            </div>
+            <p className="mt-1 text-slate-700 line-clamp-2">
+              {a.q3Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+            </p>
           </div>
         </div>
       );
@@ -128,22 +194,87 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
       const a = sub.answers as Worksheet2Answers;
       return (
         <div className="space-y-2.5 text-xs sm:text-sm text-slate-800">
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-            <p className="font-bold text-[#1D436B]">Câu 1 (Các thiết bị trong Hình 1.2 & Thiết bị 2 chức năng):</p>
-            <p className="mt-0.5 whitespace-pre-line">{a.q1Text || 'Chưa điền nội dung'}</p>
-          </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-            <p className="font-bold text-[#1D436B]">Câu 2 (Máy chiếu):</p>
-            <p className="mt-0.5">{a.q2Text || 'Chưa điền nội dung'}</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-              <p className="font-bold text-[#1D436B]">Câu 3 (Bộ điều khiển game):</p>
-              <p className="mt-0.5">{a.q3Text || 'Chưa điền nội dung'}</p>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleOpenDetailModal(sub, 0)}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 0)}
+            className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+            title="Bấm để xem đề bài và hình 1.2 thiết bị vào - ra"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                Câu 1 (Hình 1.2 & Thiết bị 2 chức năng):
+              </p>
+              <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+                <ImageIcon className="w-3 h-3" />
+                <span>Xem đề bài & ảnh</span>
+              </span>
             </div>
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-              <p className="font-bold text-[#1D436B]">Câu 4 (Màn hình cảm ứng):</p>
-              <p className="mt-0.5">{a.q4Text || 'Chưa điền nội dung'}</p>
+            <p className="mt-1 text-slate-700 line-clamp-2 whitespace-pre-line">
+              {a.q1Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+            </p>
+          </div>
+
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleOpenDetailModal(sub, 1)}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 1)}
+            className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+            title="Bấm để xem đề bài và hình ảnh máy chiếu"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                Câu 2 (Máy chiếu):
+              </p>
+              <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+                <ImageIcon className="w-3 h-3" />
+                <span>Xem đề bài & ảnh</span>
+              </span>
+            </div>
+            <p className="mt-1 text-slate-700 line-clamp-2">
+              {a.q2Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => handleOpenDetailModal(sub, 2)}
+              onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 2)}
+              className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+              title="Bấm để xem đề bài và hình ảnh bộ điều khiển game"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                  Câu 3 (Bộ ĐK game):
+                </p>
+                <ImageIcon className="w-3.5 h-3.5 text-sky-600 shrink-0" />
+              </div>
+              <p className="mt-1 text-slate-700 line-clamp-2">
+                {a.q3Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+              </p>
+            </div>
+
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => handleOpenDetailModal(sub, 3)}
+              onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 3)}
+              className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+              title="Bấm để xem đề bài và hình ảnh màn hình cảm ứng"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                  Câu 4 (Màn cảm ứng):
+                </p>
+                <ImageIcon className="w-3.5 h-3.5 text-sky-600 shrink-0" />
+              </div>
+              <p className="mt-1 text-slate-700 line-clamp-2">
+                {a.q4Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+              </p>
             </div>
           </div>
         </div>
@@ -155,8 +286,23 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
       const ports = a.ports || { a: '', b: '', c: '', d: '', e: '', f: '' };
       return (
         <div className="space-y-2.5 text-xs sm:text-sm text-slate-800">
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-            <p className="font-bold text-[#1D436B] mb-1.5">Câu 1 (Kết quả lắp cổng trên thân máy):</p>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleOpenDetailModal(sub, 0)}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 0)}
+            className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+            title="Bấm để xem sơ đồ các cổng kết nối thân máy tính và đề bài"
+          >
+            <div className="flex items-center justify-between gap-2 mb-1.5">
+              <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                Câu 1 (Kết quả lắp cổng thân máy):
+              </p>
+              <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+                <ImageIcon className="w-3 h-3" />
+                <span>Xem sơ đồ & ảnh</span>
+              </span>
+            </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 font-mono-tabular text-xs">
               <span>a) Bàn phím: <strong>Cổng {ports.a || '?'}</strong></span>
               <span>b) Dây mạng: <strong>Cổng {ports.b || '?'}</strong></span>
@@ -166,9 +312,27 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
               <span>f) Dây nguồn: <strong>Cổng {ports.f || '?'}</strong></span>
             </div>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-            <p className="font-bold text-[#1D436B]">Câu 2 (Thời điểm cấp nguồn điện):</p>
-            <p className="mt-0.5">{a.q2Text || 'Chưa điền nội dung'}</p>
+
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleOpenDetailModal(sub, 1)}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 1)}
+            className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+            title="Bấm để xem đề bài và hình ảnh thời điểm cấp nguồn"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+                Câu 2 (Thời điểm cấp nguồn điện):
+              </p>
+              <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+                <ImageIcon className="w-3 h-3" />
+                <span>Xem đề bài & ảnh</span>
+              </span>
+            </div>
+            <p className="mt-1 text-slate-700 line-clamp-2">
+              {a.q2Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+            </p>
           </div>
         </div>
       );
@@ -177,17 +341,70 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
     const a = sub.answers as Worksheet4Answers;
     return (
       <div className="space-y-2.5 text-xs sm:text-sm text-slate-800">
-        <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-          <p className="font-bold text-[#1D436B]">Câu 1 (Tình huống Camera an ninh):</p>
-          <p className="mt-0.5">{a.q1Text || 'Chưa điền nội dung'}</p>
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => handleOpenDetailModal(sub, 0)}
+          onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 0)}
+          className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+          title="Bấm để xem đề bài và hình ảnh tình huống Camera"
+        >
+          <div className="flex items-center justify-between gap-2">
+            <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+              Câu 1 (Tình huống Camera an ninh):
+            </p>
+            <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+              <ImageIcon className="w-3 h-3" />
+              <span>Xem đề bài & ảnh</span>
+            </span>
+          </div>
+          <p className="mt-1 text-slate-700 line-clamp-2">
+            {a.q1Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+          </p>
         </div>
-        <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-          <p className="font-bold text-[#1D436B]">Câu 2 (Tình huống Máy in bị lỗi do virus):</p>
-          <p className="mt-0.5">{a.q2Text || 'Chưa điền nội dung'}</p>
+
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => handleOpenDetailModal(sub, 1)}
+          onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 1)}
+          className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+          title="Bấm để xem đề bài và hình ảnh máy in / virus"
+        >
+          <div className="flex items-center justify-between gap-2">
+            <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+              Câu 2 (Tình huống Máy in bị lỗi do virus):
+            </p>
+            <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+              <ImageIcon className="w-3 h-3" />
+              <span>Xem đề bài & ảnh</span>
+            </span>
+          </div>
+          <p className="mt-1 text-slate-700 line-clamp-2">
+            {a.q2Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+          </p>
         </div>
-        <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-          <p className="font-bold text-[#1D436B]">Câu 3 (Đề xuất quy tắc phòng máy an toàn):</p>
-          <p className="mt-0.5 whitespace-pre-line">{a.q3Text || 'Chưa điền nội dung'}</p>
+
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => handleOpenDetailModal(sub, 2)}
+          onKeyDown={(e) => e.key === 'Enter' && handleOpenDetailModal(sub, 2)}
+          className="p-3 rounded-lg bg-slate-50/90 hover:bg-sky-50/80 border border-slate-200/90 hover:border-sky-300 transition-all cursor-pointer group/q shadow-2xs relative"
+          title="Bấm để xem đề bài và hình ảnh quy tắc phòng máy an toàn"
+        >
+          <div className="flex items-center justify-between gap-2">
+            <p className="font-bold text-[#1D436B] group-hover/q:text-sky-700 transition-colors">
+              Câu 3 (Đề xuất quy tắc phòng máy an toàn):
+            </p>
+            <span className="text-[11px] font-semibold text-sky-700 bg-sky-100/80 group-hover/q:bg-sky-600 group-hover/q:text-white px-2 py-0.5 rounded transition-colors flex items-center gap-1 shrink-0">
+              <ImageIcon className="w-3 h-3" />
+              <span>Xem đề bài & ảnh</span>
+            </span>
+          </div>
+          <p className="mt-1 text-slate-700 line-clamp-2 whitespace-pre-line">
+            {a.q3Text || <span className="text-slate-400 italic font-normal">Chưa điền nội dung</span>}
+          </p>
         </div>
       </div>
     );
@@ -293,10 +510,23 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
                               {typeof sc === 'number' ? (
                                 <button
                                   type="button"
-                                  onClick={() => setSelectedWorksheet(wid)}
-                                  className="text-emerald-700 hover:underline"
+                                  onClick={() => {
+                                    setSelectedWorksheet(wid);
+                                    const matched = submissions.find(
+                                      (s) =>
+                                        s.worksheetId === wid &&
+                                        s.group.groupName.toLowerCase() === row.groupName.toLowerCase() &&
+                                        s.group.className.toLowerCase() === row.className.toLowerCase()
+                                    );
+                                    if (matched) {
+                                      handleOpenDetailModal(matched, 0);
+                                    }
+                                  }}
+                                  className="text-emerald-700 hover:underline flex items-center justify-center gap-1 mx-auto"
+                                  title="Bấm để xem đề bài, hình ảnh và câu trả lời của nhóm này"
                                 >
-                                  {sc}đ
+                                  <span>{sc}đ</span>
+                                  <ExternalLink className="w-3 h-3 opacity-60" />
                                 </button>
                               ) : (
                                 <span className="text-slate-400">—</span>
@@ -387,10 +617,14 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
 
       {/* Group Submissions Cards for Selected Worksheet */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-base font-bold text-slate-900">
             Danh sách câu trả lời các nhóm – Phiếu {currentMeta.numberLabel} ({filteredSubmissions.length} bài nộp)
           </h2>
+          <span className="text-xs text-sky-800 bg-sky-50 border border-sky-200 px-2.5 py-1 rounded-lg flex items-center gap-1.5 font-medium">
+            <HelpCircle className="w-3.5 h-3.5 text-sky-600" />
+            <span>Bấm trực tiếp vào từng câu trả lời để xem đề bài & hình ảnh</span>
+          </span>
         </div>
 
         {filteredSubmissions.length === 0 ? (
@@ -507,15 +741,27 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
                   </div>
 
                   {/* Card Footer Actions */}
-                  <div className="px-5 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => startEdit(sub)}
-                      className="flex items-center gap-1.5 text-xs font-semibold text-[#2B5B84] hover:underline whitespace-nowrap shrink-0"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>Chấm điểm & Nhận xét</span>
-                    </button>
+                  <div className="px-5 py-3 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenDetailModal(sub, 0)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#2B5B84] bg-sky-50 border border-sky-200 hover:bg-sky-100 rounded-lg transition-colors whitespace-nowrap shrink-0 shadow-2xs"
+                        title="Xem toàn bộ đề bài và hình ảnh minh họa tương ứng"
+                      >
+                        <BookOpen className="w-3.5 h-3.5 text-[#2B5B84]" />
+                        <span>Xem đề bài & ảnh</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => startEdit(sub)}
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-[#2B5B84] hover:underline whitespace-nowrap shrink-0"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Chấm điểm</span>
+                      </button>
+                    </div>
 
                     <button
                       type="button"
@@ -523,7 +769,7 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
                       className="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-red-600 transition-colors whitespace-nowrap shrink-0"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
-                      <span>Xóa bài nộp</span>
+                      <span>Xóa bài</span>
                     </button>
                   </div>
                 </div>
@@ -532,6 +778,16 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
           </div>
         )}
       </div>
+
+      {/* Modal Chi tiết Đề bài, Hình ảnh và Câu trả lời của nhóm */}
+      {detailModalSubmission && (
+        <GroupAnswerDetailModal
+          submission={detailModalSubmission}
+          initialQuestionIndex={detailModalInitialQ}
+          onClose={() => setDetailModalSubmission(null)}
+          onUpdateGrade={onUpdateGrade}
+        />
+      )}
     </div>
   );
 };

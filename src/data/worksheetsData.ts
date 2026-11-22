@@ -218,6 +218,161 @@ export const STANDARD_ANSWERS = {
   },
 };
 
+export interface WorksheetQuestionData {
+  questionNumber: number;
+  questionTitle: string;
+  shortLabel: string;
+  prompt: string;
+  image?: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  hint?: string;
+  standardAnswer: string;
+}
+
+export const WORKSHEET_QUESTIONS: Record<WorksheetId, WorksheetQuestionData[]> = {
+  1: [
+    {
+      questionNumber: 1,
+      questionTitle: 'Câu 1',
+      shortLabel: 'Dạng thông tin',
+      prompt: 'Các thiết bị trong hình (Micro và Loa) làm việc với dạng thông tin nào?',
+      image: '/assets/worksheets/phieu1_micro_loa.jpg',
+      imageAlt: 'Hình minh họa Micro và Loa',
+      imageCaption: 'Thiết bị 1: Micro | Thiết bị 2: Loa máy tính',
+      hint: 'Hãy xem thông tin đi theo chiều nào so với máy tính – đi vào máy tính hay từ máy tính đi ra. Thiết bị vào: Tiếp nhận thông tin từ bên ngoài chuyển vào máy tính. Thiết bị ra: Đưa thông tin từ máy tính ra bên ngoài.',
+      standardAnswer: STANDARD_ANSWERS[1].q1,
+    },
+    {
+      questionNumber: 2,
+      questionTitle: 'Câu 2',
+      shortLabel: 'Thiết bị vào',
+      prompt: 'Thiết bị nào tiếp nhận thông tin và chuyển vào máy tính?',
+      image: '/assets/worksheets/phieu1_micro_loa.jpg',
+      imageAlt: 'Hình minh họa Micro và Loa',
+      imageCaption: 'Thiết bị 1: Micro | Thiết bị 2: Loa máy tính',
+      hint: 'Micro tiếp nhận âm thanh từ môi trường xung quanh và chuyển đổi thành tín hiệu âm thanh đưa vào máy tính.',
+      standardAnswer: STANDARD_ANSWERS[1].q2,
+    },
+    {
+      questionNumber: 3,
+      questionTitle: 'Câu 3',
+      shortLabel: 'Thiết bị ra',
+      prompt: 'Thiết bị nào nhận thông tin từ máy tính đưa ra bên ngoài?',
+      image: '/assets/worksheets/phieu1_micro_loa.jpg',
+      imageAlt: 'Hình minh họa Micro và Loa',
+      imageCaption: 'Thiết bị 1: Micro | Thiết bị 2: Loa máy tính',
+      hint: 'Loa nhận tín hiệu âm thanh từ máy tính và khuếch đại, phát ra môi trường bên ngoài cho tai người nghe.',
+      standardAnswer: STANDARD_ANSWERS[1].q3,
+    },
+  ],
+  2: [
+    {
+      questionNumber: 1,
+      questionTitle: 'Câu 1',
+      shortLabel: 'Thiết bị trong Hình 1.2 & Thiết bị 2 chức năng',
+      prompt: 'Mỗi thiết bị vào – ra trong hình trên làm việc với dạng thông tin nào? Thiết bị nào có cả hai chức năng vào và ra?',
+      image: '/assets/worksheets/phieu2_hinh1_2_thiet_bi_vao_ra.jpg',
+      imageAlt: 'Hình 1.2. Sơ đồ các thiết bị vào – ra',
+      imageCaption: 'Hình 1.2: Thiết bị vào (chuột, bàn phím, micro, camera, máy quét...) và Thiết bị ra (màn hình, tai nghe, máy in, loa...)',
+      hint: 'Quan sát sơ đồ hai cột: Thiết bị vào bên trái và Thiết bị ra bên phải. Tìm thiết bị vừa có thể chạm tương tác vừa có thể hiển thị thông tin.',
+      standardAnswer: STANDARD_ANSWERS[2].q1,
+    },
+    {
+      questionNumber: 2,
+      questionTitle: 'Câu 2',
+      shortLabel: 'Máy chiếu',
+      prompt: 'Máy chiếu là thiết bị vào hay thiết bị ra? Máy chiếu làm việc với dạng thông tin nào?',
+      image: '/assets/worksheets/phieu2_hinh1_2_thiet_bi_vao_ra.jpg',
+      imageAlt: 'Hình 1.2. Sơ đồ các thiết bị vào – ra',
+      imageCaption: 'Máy chiếu hiển thị thông tin hình ảnh từ máy tính ra màn chiếu lớn',
+      hint: 'Máy chiếu nhận dữ liệu từ máy tính và chiếu hình ảnh, văn bản lên màn chắn.',
+      standardAnswer: STANDARD_ANSWERS[2].q2,
+    },
+    {
+      questionNumber: 3,
+      questionTitle: 'Câu 3',
+      shortLabel: 'Bộ điều khiển game',
+      prompt: 'Bộ điều khiển game là thiết bị vào hay thiết bị ra?',
+      image: '/assets/worksheets/phieu2_bo_dieu_khien_game.jpg',
+      imageAlt: 'Bộ điều khiển game',
+      imageCaption: 'Hình minh họa: Bộ điều khiển game (tay cầm chơi game / Gamepad)',
+      hint: 'Bộ điều khiển game nhận thao tác bấm nút, di chuyển cần gạt từ người chơi để gửi tín hiệu vào máy tính.',
+      standardAnswer: STANDARD_ANSWERS[2].q3,
+    },
+    {
+      questionNumber: 4,
+      questionTitle: 'Câu 4',
+      shortLabel: 'Màn hình cảm ứng',
+      prompt: 'Màn hình cảm ứng là thiết bị vào, thiết bị ra hay có cả hai chức năng vào và ra?',
+      image: '/assets/worksheets/phieu2_man_hinh_cam_ung.jpg',
+      imageAlt: 'Màn hình cảm ứng',
+      imageCaption: 'Hình minh họa: Màn hình cảm ứng (Touch screen)',
+      hint: 'Màn hình cảm ứng vừa hiển thị thông tin hình ảnh từ máy tính (chức năng ra), vừa tiếp nhận thao tác chạm để điều khiển (chức năng vào).',
+      standardAnswer: STANDARD_ANSWERS[2].q4,
+    },
+  ],
+  3: [
+    {
+      questionNumber: 1,
+      questionTitle: 'Câu 1',
+      shortLabel: 'Lắp các thiết bị vào đúng cổng',
+      prompt: 'Em hãy lắp các thiết bị sau vào đúng cổng của nó (ghi số của cổng tương ứng trên thân máy): a) Bàn phím, b) Dây mạng, c) Chuột, d) Dây màn hình, e) Tai nghe, f) Dây nguồn.',
+      image: '/assets/worksheets/phieu3_ket_noi_cong_thiet_bi.jpg',
+      imageAlt: 'Sơ đồ các cổng kết nối trên thân máy tính',
+      imageCaption: 'Sơ đồ 8 cổng kết nối phía sau thân máy tính: Cổng 1 (Line In), Cổng 2 (Line Out), Cổng 3 (HDMI), Cổng 4 (Headphone), Cổng 5 (Micro), Cổng 6 (LAN), Cổng 7 (USB), Cổng 8 (Dây nguồn)',
+      hint: 'Quan sát các vị trí và hình dạng cổng cắm phía sau thân máy: Cổng 7 là USB (bàn phím, chuột), Cổng 6 là LAN (mạng), Cổng 3 là HDMI (màn hình), Cổng 4 là tai nghe, Cổng 8 là nguồn.',
+      standardAnswer: STANDARD_ANSWERS[3].q1,
+    },
+    {
+      questionNumber: 2,
+      questionTitle: 'Câu 2',
+      shortLabel: 'Thời điểm cấp nguồn điện',
+      prompt: 'Việc cấp nguồn điện cho máy tính cần được thực hiện trước hay sau các kết nối trên? Vì sao?',
+      image: '/assets/worksheets/phieu3_ket_noi_cong_thiet_bi.jpg',
+      imageAlt: 'Sơ đồ các cổng kết nối và nguồn điện',
+      imageCaption: 'Cổng số 8 là ổ cắm dây nguồn điện cho thân máy',
+      hint: 'Nếu cắm nguồn điện trước khi cắm dây cáp tín hiệu có thể gây ra hiện tượng gì về an toàn điện và chập mạch thiết bị?',
+      standardAnswer: STANDARD_ANSWERS[3].q2,
+    },
+  ],
+  4: [
+    {
+      questionNumber: 1,
+      questionTitle: 'Câu 1',
+      shortLabel: 'Tình huống Camera an ninh',
+      prompt: 'Trên màn hình theo dõi, em thấy có một người đứng trước camera an ninh. Người đó có biết em đang theo dõi không? Tại sao?',
+      image: '/assets/worksheets/phieu2_hinh1_2_thiet_bi_vao_ra.jpg',
+      imageAlt: 'Sơ đồ thiết bị vào và ra',
+      imageCaption: 'Camera an ninh là thiết bị vào (thu hình), màn hình theo dõi là thiết bị ra (hiển thị)',
+      hint: 'Camera chỉ thu hình ảnh từ bên ngoài gửi vào máy tính (chiều vào), không có chức năng phát hình ảnh từ em ngược lại cho người đó.',
+      standardAnswer: STANDARD_ANSWERS[4].q1,
+    },
+    {
+      questionNumber: 2,
+      questionTitle: 'Câu 2',
+      shortLabel: 'Tình huống Máy in lỗi do virus',
+      prompt: 'Máy in của em in ra những kí hiệu không mong muốn và em biết lỗi này là do virus gây ra. Em cần phải diệt virus ở máy in hay máy tính? Tại sao?',
+      image: '/assets/worksheets/phieu2_hinh1_2_thiet_bi_vao_ra.jpg',
+      imageAlt: 'Sơ đồ thiết bị vào và ra',
+      imageCaption: 'Máy in là thiết bị ra chỉ nhận dữ liệu và lệnh từ máy tính để in',
+      hint: 'Máy in là thiết bị ra, không có hệ điều hành hay bộ nhớ lưu trữ chương trình phần mềm. Virus cư trú và lây lan trong máy tính.',
+      standardAnswer: STANDARD_ANSWERS[4].q2,
+    },
+    {
+      questionNumber: 3,
+      questionTitle: 'Câu 3',
+      shortLabel: 'Quy tắc an toàn phòng máy tính',
+      prompt: 'Em hãy đề xuất một số quy tắc để giúp các bạn sử dụng phòng máy tính an toàn.',
+      image: '/assets/worksheets/phieu3_ket_noi_cong_thiet_bi.jpg',
+      imageAlt: 'Kết nối thiết bị và an toàn phòng máy tính',
+      imageCaption: 'An toàn về điện, thiết bị kết nối và vệ sinh phòng thực hành Tin học',
+      hint: 'Đề xuất quy tắc về an toàn điện, cắm rút thiết bị, đồ ăn thức uống, tay khô ráo khi thao tác, tắt máy đúng quy trình.',
+      standardAnswer: STANDARD_ANSWERS[4].q3,
+    },
+  ],
+};
+
 // Hàm chấm điểm tự động hỗ trợ tự luận & trắc nghiệm (0 - 100 điểm)
 export function calculateWorksheetScore(
   worksheetId: WorksheetId,
